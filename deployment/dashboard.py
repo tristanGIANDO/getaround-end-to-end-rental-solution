@@ -9,6 +9,21 @@ from PIL import Image
 # Define the FastAPI endpoint URL
 API_URL = "http://127.0.0.1:8000/predict"
 
+st.set_page_config(page_title="Getaround Dashboard", page_icon="🚗", layout="wide")
+
+
+@st.cache_data
+def load_data():
+    logo = Image.open("getaround_logo.png")
+    car_image = Image.open("images/car.webp")
+    pricing_df = pd.read_csv("get_around_pricing_project.csv")
+    delay_df = pd.read_excel("get_around_delay_analysis.xlsx")
+
+    return logo, car_image, pricing_df, delay_df
+
+
+logo, car_image, pricing_df, delay_df = load_data()
+
 
 # Function to retrieve possible values for "model_key"
 def get_model_keys():
@@ -30,23 +45,17 @@ def get_car_types():
     return ["sedan", "suv", "coupe", "hatchback", "convertible", "wagon"]
 
 
-# Load GetAround logo
-logo = Image.open("getaround_logo.png")
-
-# Streamlit App
-st.set_page_config(page_title="Getaround Dashboard", page_icon="🚗", layout="wide")
-
 # Add a custom background color
 st.markdown(
     """
     <style>
     .main {
-        background-color: #f5f5f5;
+        background-color: #d6e1e1;
         padding: 20px;
         border-radius: 10px;
     }
     .sidebar .sidebar-content {
-        background-color: #e8f0fe;
+        background-color: #B01AA7;
         border-radius: 10px;
     }
     </style>
@@ -55,26 +64,23 @@ st.markdown(
 )
 
 # Display logo at the top
-st.image(logo, use_column_width=False, width=200)
+st.image(logo, use_column_width=False, width=500)
 
 st.title("Getaround Data Analysis")
 
 
 # Load the pricing dataset
-pricing_file = "get_around_pricing_project.csv"
-pricing_df = pd.read_csv(pricing_file)
+
 pricing_cleaned = pricing_df[
     (pricing_df["mileage"] > 0) & (pricing_df["rental_price_per_day"] > 0)
 ]
-
-
-# Load delay dataset
-delay_file = "get_around_delay_analysis.xlsx"
-delay_df = pd.read_excel(delay_file)
 positive_delays = delay_df[delay_df["delay_at_checkout_in_minutes"] > 0]
 
 # User-defined threshold
-st.markdown("#### Delay Analysis")
+st.markdown(
+    '<h2 style="color:#B01AA7; font-size:20px;">Delay Analysis</h2>',
+    unsafe_allow_html=True,
+)
 st.write(
     "Move the slider to set the delay threshold and see the number of rentals delayed beyond that threshold:"
 )
@@ -92,7 +98,10 @@ st.markdown(
 )
 
 # Display the interactive charts
-st.markdown("### Data Visualizations")
+st.markdown(
+    '<h2 style="color:#B01AA7; font-size:20px;">Data Visualizations</h2>',
+    unsafe_allow_html=True,
+)
 
 # Create the price distribution plot
 price_dist_fig = px.histogram(
@@ -126,7 +135,10 @@ st.write("Enter car features below to predict the rental price:")
 
 # Layout for inputs
 with st.container():
-    st.markdown("#### Basic Information")
+    st.markdown(
+        '<h2 style="color:#B01AA7; font-size:20px;">Basic Information</h2>',
+        unsafe_allow_html=True,
+    )
 
     col1, col2, col3 = st.columns(3)
 
@@ -169,22 +181,30 @@ with st.container():
         selected_car_type = st.selectbox("Select Car Type", car_types, key="car_type")
 
 # Checkboxes for boolean features
-st.markdown("#### Additional Features")
-private_parking_available = st.checkbox("Private Parking Available")
-has_gps = st.checkbox("Has GPS")
-has_air_conditioning = st.checkbox("Has Air Conditioning")
-automatic_car = st.checkbox("Automatic Car")
-has_getaround_connect = st.checkbox("Has Getaround Connect")
-has_speed_regulator = st.checkbox("Has Speed Regulator")
-winter_tires = st.checkbox("Winter Tires")
+with st.container():
+    col1, col2 = st.columns(2)
 
+    with col1:
+        st.markdown(
+            '<h2 style="color:#B01AA7; font-size:20px;">Additional Features</h2>',
+            unsafe_allow_html=True,
+        )
+        private_parking_available = st.checkbox("Private Parking Available")
+        has_gps = st.checkbox("Has GPS")
+        has_air_conditioning = st.checkbox("Has Air Conditioning")
+        automatic_car = st.checkbox("Automatic Car")
+        has_getaround_connect = st.checkbox("Has Getaround Connect")
+        has_speed_regulator = st.checkbox("Has Speed Regulator")
+        winter_tires = st.checkbox("Winter Tires")
 
+    with col2:
+        st.image(car_image, caption="source: DALL-E", use_column_width=True)
 # Layout for prediction result
 prediction_placeholder = st.empty()
 
 
 # Button to send prediction request
-if st.button("Predict", key="predict"):
+if st.button("**Predict**", key="predict"):
     # Prepare the payload
     payload = {
         "model_key": selected_model_key,
@@ -208,6 +228,6 @@ if st.button("Predict", key="predict"):
 
     if response.status_code == 200:
         result = response.json()
-        prediction_placeholder.markdown(f"# {result["prediction"]}")
+        prediction_placeholder.markdown(f"## Rental Price: **{result["prediction"]}**")
     else:
         st.error(f"Error: {response.status_code} - {response.text}")
