@@ -9,3 +9,7 @@ python -m train
 ```
 
 The model is saved in `data/model.pkl`.
+
+## DEPLOYMENT
+
+APP_NAME=getaroundappgiando
