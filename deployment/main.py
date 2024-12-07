@@ -1,6 +1,7 @@
 import os
 from typing import Union
 
+import pandas as pd
 import uvicorn
 from fastapi import FastAPI, Request
 from joblib import load
@@ -33,9 +34,30 @@ async def predict(
 
     try:
         model = load("model.pkl")
-        prediction_result = model.predict(input_data)
 
-        return {f"{prediction_result[0]:.2f}$"}
+        # Préparer les données d'entrée sous forme de DataFrame
+        features = {
+            "model_key": [input_data.model_key],
+            "mileage": [input_data.mileage],
+            "engine_power": [input_data.engine_power],
+            "fuel": [input_data.fuel],
+            "paint_color": [input_data.paint_color],
+            "car_type": [input_data.car_type],
+            "private_parking_available": [input_data.private_parking_available],
+            "has_gps": [input_data.has_gps],
+            "has_air_conditioning": [input_data.has_air_conditioning],
+            "automatic_car": [input_data.automatic_car],
+            "has_getaround_connect": [input_data.has_getaround_connect],
+            "has_speed_regulator": [input_data.has_speed_regulator],
+            "winter_tires": [input_data.winter_tires],
+        }
+        input_df = pd.DataFrame(features)  # Convertir en DataFrame
+
+        # Effectuer la prédiction
+        prediction_result = model.predict(input_df)
+
+        # Retourner le résultat de la prédiction
+        return {"prediction": f"{prediction_result[0]:.2f}$"}
 
     except Exception as e:
         print(f"Error during processing: {e}")

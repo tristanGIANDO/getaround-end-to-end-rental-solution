@@ -10,6 +10,22 @@ python -m train
 
 The model is saved in `data/model.pkl`.
 
-## DEPLOYMENT
+## LOCAL DEPLOYMENT
 
-APP_NAME=getaroundappgiando
+```bash
+cd deployment
+```
+
+```bash
+streamlit run dashboard.py
+```
+
+```bash
+python main.py
+```
+
+Or if you can use `make`:
+
+```bash
+make local-app
+```
