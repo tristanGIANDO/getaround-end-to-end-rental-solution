@@ -1,6 +1,0 @@
-fastapi[standard]==0.112.0
-uvicorn
-numpy
-scikit-learn
-pydantic
-pandas
