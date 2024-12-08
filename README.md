@@ -1,5 +1,12 @@
 # getaround-end-to-end-rental-solution
 
+
+## USAGE
+
+Click on this link to access the web dashboard:
+https://getaround-end-to-end-rental-solution-fxcfy9ndwnqd3facsw3nd5.streamlit.app/
+
+
 ## TRAINING
 
 To train the model, run this command:
