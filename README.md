@@ -31,7 +31,7 @@ Copy/paste this link if you can't access the URL:
 https://getaround-end-to-end-rental-solution-fxcfy9ndwnqd3facsw3nd5.streamlit.app/
 ```
 
-[dashboard_image](resources/dashboard.png)
+![dashboard_image](https://raw.githubusercontent.com/tristanGIANDO/getaround-end-to-end-rental-solution/main/resources/dashboard.png)
 
 ### API
 
@@ -43,7 +43,7 @@ Copy/paste this link if you can't access the URL:
 https://gt-api-getaround-93493ccc17ad.herokuapp.com/docs#/
 ```
 
-[api_image](resources/api.png)
+![api_image](https://raw.githubusercontent.com/tristanGIANDO/getaround-end-to-end-rental-solution/main/resources/api.png)
 
 ## Train the model
 
