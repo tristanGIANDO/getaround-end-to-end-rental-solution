@@ -14,10 +14,10 @@ st.set_page_config(page_title="Getaround Dashboard", page_icon="🚗", layout="w
 
 @st.cache_data
 def load_data():
-    logo = Image.open("getaround_logo.png")
-    car_image = Image.open("images/car.webp")
-    pricing_df = pd.read_csv("get_around_pricing_project.csv")
-    delay_df = pd.read_excel("get_around_delay_analysis.xlsx")
+    logo = Image.open("deployment/getaround_logo.png")
+    car_image = Image.open("deployment/images/car.webp")
+    pricing_df = pd.read_csv("deployment/get_around_pricing_project.csv")
+    delay_df = pd.read_excel("deployment/get_around_delay_analysis.xlsx")
 
     return logo, car_image, pricing_df, delay_df
 
