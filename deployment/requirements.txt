@@ -2,3 +2,4 @@ fastapi
 numpy
 scikit-learn
 pandas
+plotly
