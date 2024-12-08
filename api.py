@@ -33,7 +33,7 @@ async def predict(
     await request.json()
 
     try:
-        model = load("model.pkl")
+        model = load("deployment/model.pkl")
 
         # Préparer les données d'entrée sous forme de DataFrame
         features = {
