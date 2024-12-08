@@ -7,7 +7,7 @@ import streamlit as st
 from PIL import Image
 
 # Define the FastAPI endpoint URL
-API_URL = "http://127.0.0.1:8000/predict"
+API_URL = "https://gt-api-getaround-93493ccc17ad.herokuapp.com/predict"
 
 st.set_page_config(page_title="Getaround Dashboard", page_icon="🚗", layout="wide")
 
